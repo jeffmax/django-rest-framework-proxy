@@ -104,28 +104,7 @@ class ProxyView(BaseProxyView):
         Modified version of rest_framework.request.Request._parse(self)
         """
         parsers = self.get_parsers()
-        stream = StringIO(response._content)
-        content_type = response.headers.get('content-type', None)
-
-        if stream is None or content_type is None:
-            return {}
-
-        parser = None
-        for item in parsers:
-            if media_type_matches(item.media_type, content_type):
-                parser = item
-
-        if not parser:
-            raise UnsupportedMediaType(content_type)
-
-        parsed = parser.parse(stream, content_type)
-
-        # Parser classes may return the raw data, or a
-        # DataAndFiles object. Return only data.
-        try:
-            return parsed.data
-        except AttributeError:
-            return parsed
+        return StringIO(response._content)
 
     def create_response(self, response):
         if self.return_raw or self.proxy_settings.RETURN_RAW:
