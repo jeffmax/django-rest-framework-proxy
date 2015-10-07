@@ -130,7 +130,7 @@ class ProxyView(BaseProxyView):
 
     def create_response(self, response):
         if self.return_raw or self.proxy_settings.RETURN_RAW:
-            r = HttpResponse(response.raw.read())
+            r = HttpResponse(response.content)
             for key,item in response.headers.items():
                 r[key] = item
             return r
