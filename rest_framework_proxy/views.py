@@ -130,9 +130,11 @@ class ProxyView(BaseProxyView):
 
     def create_response(self, response):
         if self.return_raw or self.proxy_settings.RETURN_RAW:
-            r = HttpResponse(json.dumps(response.headers))
-            #for key,item in response.headers.items():
-            #   r[key] = item
+            r = HttpResponse(response.content)
+            for key,item in response.headers.items():
+               if key.endswith("Encoding"): # Not good but necessary for this approach
+                   continue
+               r[key] = item
             return r
 
         status = response.status_code
