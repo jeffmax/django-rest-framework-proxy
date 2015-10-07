@@ -54,11 +54,12 @@ class ProxyView(BaseProxyView):
         return {}
 
     def get_request_data(self, request):
+        try:
+            request_data = request.DATA
+        except NotImplementedError:
+            request_data = request.data
         if 'application/json' in request.content_type:
-            return json.dumps(request.DATA) if request.DATA \
-                    else json.dumps(request.data)
-
-        return request.DATA if request.DATA else request.data
+            return json.dumps(request_data)
 
     def get_request_files(self, request):
         files = {}
