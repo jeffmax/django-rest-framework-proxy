@@ -58,8 +58,12 @@ class ProxyView(BaseProxyView):
             request_data = request.DATA
         except NotImplementedError:
             request_data = request.data
-        if 'application/json' in request.content_type:
-            return json.dumps(request_data)
+        if not self.proxy_settings.NO_PARSE:
+            if 'application/json' in request.content_type:
+                return json.dumps(request_data)
+        else:
+            return request_data
+        
 
     def get_request_files(self, request):
         files = {}
