@@ -29,6 +29,8 @@ DEFAULTS = {
 
     # Perform a SSL Cert Verification on URI requests are being proxied to
     'VERIFY_SSL': True,
+    
+    'NO_PARSE': True
 }
 
 api_proxy_settings = APISettings(USER_SETTINGS, DEFAULTS)
