@@ -45,8 +45,8 @@ class ProxyView(BaseProxyView):
         return host
 
     def get_request_params(self, request):
-        if request.QUERY_PARAMS:
-            qp = request.QUERY_PARAMS.copy()
+        if request.query_params:
+            qp = request.query_params.copy()
             for param in self.proxy_settings.DISALLOWED_PARAMS:
                 if param in qp:
                     del qp[param]
